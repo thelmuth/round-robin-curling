@@ -13,7 +13,7 @@ as possible).
 Works for any number of teams 13 or less. Set the number of teams at NUM_TEAMS.
 """
 
-import random, sys
+import random, sys, csv
 
 ## Set number of teams here
 NUM_TEAMS = 10
@@ -125,7 +125,6 @@ def assign_sheets_CSP_recursive(start_assignments, finished_assignments, rows, c
     """Recursively solves assignments.
     rows and cols are number of each
     row and col is current location to assign"""
-
     if row == rows:
         return "done"
     
@@ -193,8 +192,28 @@ def make_circle_assignments():
 
     return assignments
 
-def main():
+def write_csv(header_list, assignments):
+    """Writes the CSV"""
+    with open(OUTPUT_FILENAME, 'w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
 
+        final_header = ["Round", "Date"]
+        for h in header_list:
+            final_header.extend(["", h, ""])
+        csv_writer.writerow(final_header)
+
+        for week,games in enumerate(assignments):
+            row = [week+1, ""]
+            for (team1, team2) in games:
+                if team1 == "BYE":
+                    row.extend([team2, "vs.", "bye"])
+                else:
+                    row.extend([team1, "vs.", team2])
+
+            csv_writer.writerow(row)
+
+
+def main():
     if not ODD and NUM_TEAMS > 12:
         print("Sorry, this program does not support an even number of teams greater than 12.")
         return
@@ -220,7 +239,7 @@ def main():
     print()
 
     print("week,", end='')
-    header_list  =  ["sheet" + str(i) for i in range(1, len(assignments[0]) + 1)]
+    header_list  =  ["Sheet " + str(i) for i in range(1, len(assignments[0]) + 1)]
     if ODD:
         header_list[-1] = "BYE"
     print(','.join(header_list))
@@ -228,6 +247,7 @@ def main():
     for week,games in enumerate(assignments):
         print(week + 1, games)
 
+    write_csv(header_list, assignments)
 
 if __name__ == "__main__":
     main()
