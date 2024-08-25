@@ -1,6 +1,15 @@
 """
 Tom Helmuth
-5/31/24
+8/25/24
+
+usage:
+python3 round_robin.py
+OR
+python3 round_robin.py 9
+where 9 is the number of teams in the league
+OR
+python3 round_robin.py 9 outfile.csv
+where outfile.csv is the CSV file you want to write to.
 
 Round robin curling schedule
 Using circle algorithm here: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
