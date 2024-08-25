@@ -1,0 +1,1 @@
+Creates a round robin schedule designed specifically for curling. Ensures that all teams play as evenly as possible on each sheet, and has the red/yellow stones an even number of times. Works for any number of teams up to 13 (and is too slow after that).
